@@ -8,7 +8,7 @@ import java.util.List;
 public interface ContactsService {
     List<Contact> getContacts(String term);
 
-    GeneralResponse createContact(Contact contact);
+    GeneralResponse createOrUpdateContact(Contact contact);
 
     GeneralResponse deleteContact(Long id);
 }

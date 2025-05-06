@@ -26,7 +26,7 @@ public class ContactsController {
 
     @PostMapping
     public GeneralResponse saveContact(@RequestBody ContactDto contactDto) {
-        return contactsService.createContact(contactDtoToContactConverter.convert(contactDto));
+        return contactsService.createOrUpdateContact(contactDtoToContactConverter.convert(contactDto));
     }
 
     @GetMapping
@@ -34,8 +34,8 @@ public class ContactsController {
         return contactToContactDtoConverter.convert(contactsService.getContacts(term));
     }
 
-    @DeleteMapping
-    public GeneralResponse deleteContact(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public GeneralResponse deleteContact(@PathVariable Long id) {
         return contactsService.deleteContact(id);
     }
 }

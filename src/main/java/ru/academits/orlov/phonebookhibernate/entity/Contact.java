@@ -20,9 +20,6 @@ public class Contact {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private Long ordinalNumber;
-
     @Column(nullable = false, length = 50)
     private String surname;
 

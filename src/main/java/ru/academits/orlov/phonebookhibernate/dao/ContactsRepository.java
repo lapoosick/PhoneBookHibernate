@@ -11,6 +11,4 @@ public interface ContactsRepository extends JpaRepository<Contact, Long> {
     List<Contact> findAllByTerm(String term);
 
     Contact findByPhoneNumber(String phoneNumber);
-
-    Contact findByOrdinalNumber(Long ordinalNumber);
 }

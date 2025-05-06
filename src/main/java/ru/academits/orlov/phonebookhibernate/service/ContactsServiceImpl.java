@@ -25,17 +25,13 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public GeneralResponse createContact(Contact contact) {
-        if (contact.getSurname() == null || contact.getSurname().isEmpty()) {
-            return GeneralResponse.getErrorResponse("Не указана фамилия.");
-        }
-
-        if (contact.getName() == null || contact.getName().isEmpty()) {
-            return GeneralResponse.getErrorResponse("Не указано имя.");
-        }
-
-        if (contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
-            return GeneralResponse.getErrorResponse("Не указан телефон.");
+    public GeneralResponse createOrUpdateContact(Contact contact) {
+        try {
+            contact.setSurname(trimString(contact.getSurname()));
+            contact.setName(trimString(contact.getName()));
+            contact.setPhoneNumber(trimString(contact.getPhoneNumber()));
+        } catch (IllegalArgumentException e) {
+            return GeneralResponse.getErrorResponse(e.getMessage());
         }
 
         if (contact.getId() == null) {
@@ -48,37 +44,18 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public GeneralResponse deleteContact(Long id) {
         if (id == null || contactsRepository.findById(id).isEmpty()) {
-            return GeneralResponse.getErrorResponse("Контакт не найден.");
+            return GeneralResponse.getErrorResponse("Контакт с id = " + id + " не найден.");
         }
-
-        long contactOrdinalNumber = contactsRepository.findById(id).get().getOrdinalNumber();
-        long lastContactId = contactsRepository.findByOrdinalNumber(contactsRepository.count()).getId();
 
         contactsRepository.deleteById(id);
-
-        long updateOrdinalNumbersCount = lastContactId - id;
-
-        if (contactsRepository.count() != 0) {
-            for (long i = 1; i <= updateOrdinalNumbersCount; i++) {
-                Contact contact = contactsRepository.findById(id + i).orElse(null);
-
-                if (contact != null) {
-                    contact.setOrdinalNumber(contactOrdinalNumber++);
-
-                    contactsRepository.save(contact);
-                }
-            }
-        }
 
         return GeneralResponse.getSuccessResponse();
     }
 
     private GeneralResponse create(Contact contact) {
         if (contactsRepository.findByPhoneNumber(contact.getPhoneNumber()) != null) {
-            return GeneralResponse.getErrorResponse("Контакт с таким номером телефона уже существует.");
+            return GeneralResponse.getErrorResponse("Контакт с номером телефона " + contact.getPhoneNumber() + " уже существует.");
         }
-
-        contact.setOrdinalNumber(contactsRepository.count() + 1);
 
         contactsRepository.save(contact);
 
@@ -96,7 +73,7 @@ public class ContactsServiceImpl implements ContactsService {
 
         if (!repositoryContact.getPhoneNumber().equalsIgnoreCase(contactPhoneNumber)
                 && contactsRepository.findByPhoneNumber(contactPhoneNumber) != null) {
-            return GeneralResponse.getErrorResponse("Контакт с таким номером телефона уже существует.");
+            return GeneralResponse.getErrorResponse("Контакт с номером телефона " + contactPhoneNumber + " уже существует.");
         }
 
         repositoryContact.setSurname(contact.getSurname());
@@ -106,5 +83,13 @@ public class ContactsServiceImpl implements ContactsService {
         contactsRepository.save(repositoryContact);
 
         return GeneralResponse.getSuccessResponse();
+    }
+
+    private static String trimString(String string) {
+        if (string == null || string.isBlank()) {
+            throw new IllegalArgumentException("Не заполнено обязательное поле.");
+        }
+
+        return string.trim();
     }
 }
