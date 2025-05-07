@@ -104,7 +104,7 @@ Vue.createApp({
             this.service.createContact(contact)
                 .then(response => {
                     if (!response.success) {
-                        alert(response.message)
+                        alert(response.message);
                     } else {
                         this.surname = "";
                         this.name = "";
@@ -114,7 +114,7 @@ Vue.createApp({
                     this.getContacts();
                 })
                 .catch((response) => {
-                    alert(response.message)
+                    alert(response.message);
                 });
         },
 
@@ -122,13 +122,13 @@ Vue.createApp({
             this.service.deleteContact(contact.id)
                 .then(response => {
                     if (!response.success) {
-                        alert(response.message)
+                        alert(response.message);
                     }
 
                     this.getContacts();
                 })
                 .catch((response) => {
-                    alert(response.message)
+                    alert(response.message);
                 });
         },
 
@@ -169,16 +169,16 @@ Vue.createApp({
             this.service.updateContact(editedContact)
                 .then(response => {
                     if (!response.success) {
-                        alert(response.message)
+                        alert(response.message);
                     }
 
                     this.getContacts();
                 })
                 .catch((response) => {
-                    alert(response.message)
+                    alert(response.message);
                 });
 
             contact.isEditing = false;
         }
     }
-}).mount("#app")
+}).mount("#app");
