@@ -84,44 +84,50 @@
                 <template v-if="contact.isEditing">
                     <td>{{ index + 1 }}</td>
                     <td>
-                        <input :class="{ 'is-invalid': contact.isEditingSurnameInvalid }"
-                               v-model.trim="contact.editingSurname"
+                        <input v-model.trim="contact.editingSurname"
+                               :class="{ 'is-invalid': contact.isEditingSurnameInvalid }"
                                class="form-control"
                                type="text">
                         <div class="invalid-feedback">Необходимо задать значение</div>
                     </td>
                     <td>
-                        <input :class="{ 'is-invalid': contact.isEditingNameInvalid }"
-                               v-model.trim="contact.editingName"
+                        <input v-model.trim="contact.editingName"
+                               :class="{ 'is-invalid': contact.isEditingNameInvalid }"
                                class="form-control"
                                type="text">
                         <div class="invalid-feedback">Необходимо задать значение</div>
                     </td>
                     <td>
-                        <input :class="{ 'is-invalid': contact.isEditingPhoneNumberInvalid }"
-                               v-model.trim="contact.editingPhoneNumber"
+                        <input v-model.trim="contact.editingPhoneNumber"
+                               :class="{ 'is-invalid': contact.isEditingPhoneNumberInvalid }"
                                class="form-control"
                                type="text">
                         <div class="invalid-feedback">Необходимо задать значение</div>
                     </td>
                     <td>
-                        <button @click="saveContact(contact)" class="btn btn-primary me-1" type="button">Сохранить</button>
-                        <button @click="contact.isEditing = false" class="btn btn-secondary" type="button">Отмена</button>
+                        <button @click="saveContact(contact)"
+                                class="btn btn-primary me-1"
+                                type="button">Сохранить
+                        </button>
+                        <button @click="contact.isEditing = false"
+                                class="btn btn-secondary"
+                                type="button">Отмена
+                        </button>
                     </td>
                 </template>
                 <template v-else>
                     <td>{{ index + 1 }}</td>
                     <td>
                         {{ contact.surname }}
-                        <div class="invalid-feedback">Необходимо задать значение</div>
+<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
                     </td>
                     <td>
                         {{ contact.name }}
-                        <div class="invalid-feedback">Необходимо задать значение</div>
+<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
                     </td>
                     <td>
                         {{ contact.phoneNumber }}
-                        <div class="invalid-feedback">Необходимо задать значение</div>
+<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
                     </td>
                     <td>
                         <button @click="editContact(contact)" class="btn btn-primary" type="button">Изменить</button>
