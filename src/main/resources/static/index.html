@@ -22,31 +22,37 @@
 
                 <div class="mb-3">
                     <label for="surname" class="form-label">Фамилия</label>
+
                     <input :class="{ 'is-invalid': isSurnameInvalid }"
                            v-model.trim="surname"
                            type="text"
                            class="form-control"
                            id="surname">
+
                     <div class="invalid-feedback">Необходимо задать значение</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Имя</label>
+
                     <input :class="{ 'is-invalid': isNameInvalid }"
                            v-model.trim="name"
                            type="text"
                            class="form-control"
                            id="name">
+
                     <div class="invalid-feedback">Необходимо задать значение</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="phone-number" class="form-label">Номер телефона</label>
+
                     <input :class="{ 'is-invalid': isPhoneNumberInvalid }"
                            v-model.trim="phoneNumber"
                            type="text"
                            class="form-control"
                            id="phone-number">
+
                     <div class="invalid-feedback">Необходимо задать значение</div>
                 </div>
 
@@ -105,30 +111,15 @@
                         <div class="invalid-feedback">Необходимо задать значение</div>
                     </td>
                     <td>
-                        <button @click="saveContact(contact)"
-                                class="btn btn-primary me-1"
-                                type="button">Сохранить
-                        </button>
-                        <button @click="contact.isEditing = false"
-                                class="btn btn-secondary"
-                                type="button">Отмена
-                        </button>
+                        <button @click="saveContact(contact)" class="btn btn-primary me-1" type="button">Сохранить</button>
+                        <button @click="contact.isEditing = false" class="btn btn-secondary" type="button">Отмена</button>
                     </td>
                 </template>
                 <template v-else>
                     <td>{{ index + 1 }}</td>
-                    <td>
-                        {{ contact.surname }}
-<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
-                    </td>
-                    <td>
-                        {{ contact.name }}
-<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
-                    </td>
-                    <td>
-                        {{ contact.phoneNumber }}
-<!--                        <div class="invalid-feedback">Необходимо задать значение</div>-->
-                    </td>
+                    <td>{{ contact.surname }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.phoneNumber }}</td>
                     <td>
                         <button @click="editContact(contact)" class="btn btn-primary" type="button">Изменить</button>
                         <button @click="deleteContact(contact)" class="btn btn-danger" type="button">Удалить</button>
