@@ -27,9 +27,9 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public GeneralResponse createOrUpdateContact(Contact contact) {
         try {
-            contact.setSurname(validateAndTrimString(contact.getSurname()));
-            contact.setName(validateAndTrimString(contact.getName()));
-            contact.setPhoneNumber(validateAndTrimString(contact.getPhoneNumber()));
+            contact.setSurname(validateAndTrim(contact.getSurname()));
+            contact.setName(validateAndTrim(contact.getName()));
+            contact.setPhoneNumber(validateAndTrim(contact.getPhoneNumber()));
         } catch (IllegalArgumentException e) {
             return GeneralResponse.getErrorResponse(e.getMessage());
         }
@@ -85,7 +85,7 @@ public class ContactsServiceImpl implements ContactsService {
         return GeneralResponse.getSuccessResponse();
     }
 
-    private static String validateAndTrimString(String string) {
+    private static String validateAndTrim(String string) {
         if (string == null || string.isBlank()) {
             throw new IllegalArgumentException("Не заполнено обязательное поле.");
         }
