@@ -1,6 +1,7 @@
 package ru.academits.orlov.phonebookhibernate.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.academits.orlov.phonebookhibernate.dao.ContactsRepository;
 import ru.academits.orlov.phonebookhibernate.dto.GeneralResponse;
 import ru.academits.orlov.phonebookhibernate.entity.Contact;
@@ -24,6 +25,7 @@ public class ContactsServiceImpl implements ContactsService {
         return contactsRepository.findAllByTerm(term);
     }
 
+    @Transactional
     @Override
     public GeneralResponse createOrUpdateContact(Contact contact) {
         try {
@@ -41,6 +43,7 @@ public class ContactsServiceImpl implements ContactsService {
         return update(contact);
     }
 
+    @Transactional
     @Override
     public GeneralResponse deleteContact(Long id) {
         if (id == null || contactsRepository.findById(id).isEmpty()) {
@@ -52,7 +55,8 @@ public class ContactsServiceImpl implements ContactsService {
         return GeneralResponse.getSuccessResponse();
     }
 
-    private GeneralResponse create(Contact contact) {
+    @Transactional
+    protected GeneralResponse create(Contact contact) {
         if (contactsRepository.findByPhoneNumber(contact.getPhoneNumber()) != null) {
             return GeneralResponse.getErrorResponse("Контакт с номером телефона " + contact.getPhoneNumber() + " уже существует.");
         }
@@ -62,7 +66,8 @@ public class ContactsServiceImpl implements ContactsService {
         return GeneralResponse.getSuccessResponse();
     }
 
-    private GeneralResponse update(Contact contact) {
+    @Transactional
+    protected GeneralResponse update(Contact contact) {
         Contact repositoryContact = contactsRepository.findById(contact.getId()).orElse(null);
 
         if (repositoryContact == null) {

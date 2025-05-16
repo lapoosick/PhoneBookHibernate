@@ -57,12 +57,16 @@ Vue.createApp({
 
     methods: {
         getContacts() {
+            this.term = "";
+            this.findContacts();
+        },
+
+        findContacts() {
             this.service.getContacts(this.term)
                 .then(contacts => {
                     this.contacts = contacts;
-                    this.term = ""
                 })
-                .catch((response) => {
+                .catch(response => {
                     alert(response.message);
                 });
         },
@@ -71,7 +75,6 @@ Vue.createApp({
             this.isSurnameInvalid = false;
             this.isNameInvalid = false;
             this.isPhoneNumberInvalid = false;
-
 
             if (this.surname.length === 0) {
                 this.isSurnameInvalid = true;
@@ -113,7 +116,7 @@ Vue.createApp({
 
                     this.getContacts();
                 })
-                .catch((response) => {
+                .catch(response => {
                     alert(response.message);
                 });
         },
@@ -127,7 +130,7 @@ Vue.createApp({
 
                     this.getContacts();
                 })
-                .catch((response) => {
+                .catch(response => {
                     alert(response.message);
                 });
         },
@@ -159,14 +162,11 @@ Vue.createApp({
                 return;
             }
 
-            const editedContact = {
-                id: contact.id,
-                surname: contact.editingSurname,
-                name: contact.editingName,
-                phoneNumber: contact.editingPhoneNumber,
-            };
+            contact.surname = contact.editingSurname;
+            contact.name = contact.editingName;
+            contact.phoneNumber = contact.editingPhoneNumber;
 
-            this.service.updateContact(editedContact)
+            this.service.updateContact(contact)
                 .then(response => {
                     if (!response.success) {
                         alert(response.message);
@@ -174,7 +174,7 @@ Vue.createApp({
 
                     this.getContacts();
                 })
-                .catch((response) => {
+                .catch(response => {
                     alert(response.message);
                 });
 

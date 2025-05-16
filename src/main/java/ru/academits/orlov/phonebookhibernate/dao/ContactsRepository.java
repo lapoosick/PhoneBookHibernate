@@ -7,8 +7,15 @@ import ru.academits.orlov.phonebookhibernate.entity.Contact;
 import java.util.List;
 
 public interface ContactsRepository extends JpaRepository<Contact, Long> {
-    @Query("select c from Contact c where c.surname like %?1% or c.name like %?1% or c.phoneNumber like %?1%")
+    @Query("from Contact c where lower(c.surname) like lower(concat('%', ?1, '%')) " +
+            "or lower(c.name) like lower(concat('%', ?1, '%')) " +
+            "or lower(c.phoneNumber) like lower(concat('%', ?1, '%'))")
     List<Contact> findAllByTerm(String term);
+
+    // Это просто другой вариант первого запроса.
+    // Тут пришлось бы три раза передавать параметр term.
+    // Кажется, вариант с HQL выглядит получше.
+    List<Contact> findAllBySurnameContainsIgnoreCaseOrNameContainsIgnoreCaseOrPhoneNumberContainsIgnoreCase(String surname, String name, String phoneNumber);
 
     Contact findByPhoneNumber(String phoneNumber);
 }
