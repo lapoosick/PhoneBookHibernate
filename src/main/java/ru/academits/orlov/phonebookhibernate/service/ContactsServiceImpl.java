@@ -22,7 +22,7 @@ public class ContactsServiceImpl implements ContactsService {
             return contactsRepository.findAll();
         }
 
-        return contactsRepository.findAllBySurnameContainsIgnoreCaseOrNameContainsIgnoreCaseOrPhoneNumberContainsIgnoreCase(term,term,term);
+        return contactsRepository.findAllBySurnameContainsIgnoreCaseOrNameContainsIgnoreCaseOrPhoneNumberContainsIgnoreCase(term, term, term);
     }
 
     @Transactional
