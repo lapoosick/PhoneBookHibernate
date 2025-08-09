@@ -6,7 +6,7 @@ import ru.academits.orlov.phonebookhibernate.entity.Contact;
 import java.util.List;
 
 public interface ContactsRepository extends JpaRepository<Contact, Long> {
-    List<Contact> findAllBySurnameContainsIgnoreCaseOrNameContainsIgnoreCaseOrPhoneNumberContainsIgnoreCase(String surname, String name, String phoneNumber);
-
     Contact findByPhoneNumber(String phoneNumber);
+
+    List<Contact> findAllBySurnameContainsIgnoreCaseOrNameContainsIgnoreCaseOrPhoneNumberContainsIgnoreCase(String surname, String name, String phoneNumber);
 }
